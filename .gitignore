@@ -1,7 +1,7 @@
+build*
+
 *.qmake.stash
 
-*Makefile*
-*.user
 *.pdb
 
 # Prerequisites
