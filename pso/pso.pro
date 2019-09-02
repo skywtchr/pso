@@ -4,4 +4,13 @@ CONFIG -= app_bundle
 CONFIG -= qt
 
 SOURCES += \
-        main.cpp
+        consolelogger.cpp \
+        main.cpp \
+        particle.cpp \
+        swarm.cpp
+
+HEADERS += \
+    consolelogger.h \
+    ilog.h \
+    particle.h \
+    swarm.h
