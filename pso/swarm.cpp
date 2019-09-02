@@ -72,7 +72,7 @@ std::vector<int>* Swarm::FixStartPosition(){
     std::vector<int>* result = new std::vector<int>();
 
     std::random_device rd;
-    std::ranlux24_base gen(rd());
+    std::mt19937  gen(rd());
     std::uniform_real_distribution<> dist(-1000, 1000);
 
     for (int i=0; i<_variablesCount; i++) {
