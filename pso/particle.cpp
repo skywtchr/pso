@@ -4,9 +4,9 @@ Particle::Particle(ILog &logger,
                    ParticleFactors &factors,
                    ObjectiveFunction &objectiveFunction,
                    RandomNumbersGenerator *randomNumbersGenerator,
-                   std::vector<int>* startPosition,
-                   std::vector<int>* startVelocity,
-                   std::vector<int>** bestSwarmPosition)
+                   std::vector<double>* startPosition,
+                   std::vector<double>* startVelocity,
+                   std::vector<double>** bestSwarmPosition)
 {
     CheckInitialConditions();
     //configs
@@ -49,18 +49,22 @@ void Particle::CheckInitialConditions()
 void Particle::UpdateVelocity()
 {
     std::uniform_real_distribution<> dist(0, 1);
-
-    double r1 = _randomNumbersGenerator->GenerateRandomValue(dist);
-    double r2 = _randomNumbersGenerator->GenerateRandomValue(dist);
-    double r3 = _randomNumbersGenerator->GenerateRandomValue(dist);
-
-
     for(std::size_t i=0; i<_velocity->size(); i++) {
 
-    (*_velocity)[i] =
-            _factors->GetSelfTrust()*r1*(*_velocity)[i]
-            + _factors->GetSelfExpirienceTrust()*r2*((*_bestParticlePosition)[i] - (*_position)[i])
-            + _factors->GetGroupExpirienceTrust()*r3*((**_bestSwarmPosition)[i] - (*_position)[i]);
+        auto selfVelocityPart =
+                _factors->GetSelfTrust() *
+                _randomNumbersGenerator->GenerateRandomValue(dist) *
+                (*_velocity)[i];
+        auto selfExpiriencePart =
+                _factors->GetSelfExpirienceTrust() *
+                _randomNumbersGenerator->GenerateRandomValue(dist) *
+                ((*_bestParticlePosition)[i] - (*_position)[i]);
+        auto groupExpiriencePart =
+                _factors->GetGroupExpirienceTrust() *
+                _randomNumbersGenerator->GenerateRandomValue(dist) *
+                ((**_bestSwarmPosition)[i] - (*_position)[i]);
+
+        (*_velocity)[i] = selfVelocityPart + selfExpiriencePart + groupExpiriencePart;
     }
 }
 
@@ -80,9 +84,14 @@ void Particle::UpdateResultAndBestValues()
     }
 }
 
-std::vector<int>* Particle::GetPosition()
+std::vector<double>* Particle::GetPosition()
 {
     return _position;
+}
+
+std::vector<double> *Particle::GetBestPosition()
+{
+    return _bestParticlePosition;
 }
 
 double Particle::GetResult()

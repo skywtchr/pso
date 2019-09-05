@@ -21,12 +21,13 @@ public:
         ParticleFactors &factors,
         ObjectiveFunction &objectiveFunction,
         RandomNumbersGenerator* randomNumbersGenerator,
-        std::vector<int>* startPosition,
-        std::vector<int>* startVelocity,
-        std::vector<int>** bestSwarmPosition);
+        std::vector<double>* startPosition,
+        std::vector<double>* startVelocity,
+        std::vector<double>** bestSwarmPosition);
     ~Particle();
 
-    std::vector<int>* GetPosition();
+    std::vector<double>* GetPosition();
+    std::vector<double>* GetBestPosition();
     double GetResult();
     double GetBestResult();
     void Move();
@@ -37,12 +38,12 @@ private:
     ObjectiveFunction *_objectiveFunction;
     RandomNumbersGenerator* _randomNumbersGenerator;
 
-    std::vector<int> *_position;
-    std::vector<int> *_bestParticlePosition;
+    std::vector<double> *_position;
+    std::vector<double> *_bestParticlePosition;
     double _result;
     double _bestParticleResult;
-    std::vector<int> *_velocity;
-    std::vector<int> **_bestSwarmPosition;
+    std::vector<double> *_velocity;
+    std::vector<double> **_bestSwarmPosition;
 
     void CheckInitialConditions();
     void UpdateVelocity();

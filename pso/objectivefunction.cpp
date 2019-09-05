@@ -1,7 +1,7 @@
 #include "objectivefunction.h"
 
 ObjectiveFunction::ObjectiveFunction(ILog &logger,
-                                     double (*objectiveFunction)(std::vector<int>&),
+                                     double (*objectiveFunction)(std::vector<double>&),
                                      int variablesCount)
 {
     _logger = &logger;
@@ -9,7 +9,7 @@ ObjectiveFunction::ObjectiveFunction(ILog &logger,
     _variablesCount = variablesCount;
 }
 
-double ObjectiveFunction::GetResult(std::vector<int> &input)
+double ObjectiveFunction::GetResult(std::vector<double> &input)
 {
     ValidateInputSize(input);
     return (*_objectiveFunction)(input);
@@ -20,7 +20,7 @@ int ObjectiveFunction::GetVariablesCount()
     return _variablesCount;
 }
 
-void ObjectiveFunction::ValidateInputSize(std::vector<int> &input)
+void ObjectiveFunction::ValidateInputSize(std::vector<double> &input)
 {
     if (static_cast<int>(input.size()) != _variablesCount) {
         auto errorMsg = "Invalid input size.";
