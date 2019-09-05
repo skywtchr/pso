@@ -119,5 +119,30 @@ int main()
     boothConfig.iterationCount = 1000;
     testPso(*logger, boothFunction, 2, boothConfig, "expected min -> f(1,3) = 0");
 
+    cout << "EASON FUNCTION" << endl;
+    SwarmConfig easonConfig(*logger);
+    easonConfig.particleFactors = new ParticleFactors(0,3,4);
+    easonConfig.particlesCount = 50;
+    easonConfig.iterationCount = 1000;
+    testPso(*logger, easonFunction, 2, easonConfig, "expected min -> f(PI,PI) = -1");
+
+    cout << "LEVI FUNCTION" << endl;
+    SwarmConfig leviConfig(*logger);
+    leviConfig.particleFactors = new ParticleFactors(0,3,4);
+    leviConfig.particlesCount = 50;
+    leviConfig.iterationCount = 1000;
+    testPso(*logger, leviFunction, 2, leviConfig, "expected min -> f(1,1) = 0");
+
+    cout << "MC CORNICK FUNCTION" << endl;
+    SwarmConfig mcCornickConfig(*logger);
+    mcCornickConfig.particleFactors = new ParticleFactors(0,3,4);
+    mcCornickConfig.particlesCount = 50;
+    mcCornickConfig.iterationCount = 1000;
+    std::vector<Domain> domains;
+    domains.push_back(Domain(-1.5, 4));
+    domains.push_back(Domain(-3, 4));
+    mcCornickConfig.variablesStartDomains = &domains;
+    testPso(*logger, mcCornickFunction, 2, mcCornickConfig, "expected min -> f(-0.54719,-1.54719) = -1.9133");
+
     delete logger;
 }
