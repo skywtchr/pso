@@ -26,28 +26,28 @@ public:
         std::vector<int>** bestSwarmPosition);
     ~Particle();
 
-    double UpdateCurrentPositionResult();
-    void Move();
     std::vector<int>* GetPosition();
+    double GetResult();
+    double GetBestResult();
+    void Move();
 
 private:
     ILog *_logger;
+    ParticleFactors *_factors;
     ObjectiveFunction *_objectiveFunction;
     RandomNumbersGenerator* _randomNumbersGenerator;
 
     std::vector<int> *_position;
-    std::vector<int> *_velocity;
-
     std::vector<int> *_bestParticlePosition;
+    double _result;
+    double _bestParticleResult;
+    std::vector<int> *_velocity;
     std::vector<int> **_bestSwarmPosition;
 
-    double _bestParticleResult;
-
-    ParticleFactors *_factors;
-
-    void CheckStartConditions();
-    void UpdateVelocity(double r1, double r2, double r3);
+    void CheckInitialConditions();
+    void UpdateVelocity();
     void UpdatePosition();
+    void UpdateResultAndBestValues();
 };
 
 #endif // PARTICLE_H
