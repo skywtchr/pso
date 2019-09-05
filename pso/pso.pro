@@ -5,6 +5,7 @@ CONFIG -= qt
 
 SOURCES += \
         consolelogger.cpp \
+        domain.cpp \
         main.cpp \
         objectivefunction.cpp \
         particle.cpp \
@@ -15,6 +16,7 @@ SOURCES += \
 
 HEADERS += \
     consolelogger.h \
+    domain.h \
     ilog.h \
     irandomnumbersgenerator.h \
     objectivefunction.h \

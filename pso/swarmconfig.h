@@ -3,21 +3,30 @@
 
 #include <random>
 #include <ctime>
+#include <vector>
+#include <stdexcept>
+#include <string>
 
 #include "irandomnumbersgenerator.h"
 #include "ranlux24numbersgenerator.h"
 #include "particlefactors.h"
+#include "domain.h"
+#include "ilog.h"
 
 class SwarmConfig
 {
 public:
-    SwarmConfig();
+    SwarmConfig(ILog &logger);
     ~SwarmConfig();
 
+    ILog *_logger;
     int particlesCount;
     int iterationCount;
     IRandomNumbersGenerator* randomNumbersGenerator;
     ParticleFactors* particleFactors;
+    std::vector<Domain>* variablesDomains;
+
+    Domain GetVariableDomain(int variableNumber);
 
 private:
     void SetDefaultValues();

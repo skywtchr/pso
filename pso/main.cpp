@@ -80,14 +80,14 @@ double mcCornickFunction(std::vector<double>& input)
     return sin(x+y) + pow(x-y,2) - 1.5*x + 2.5*y + 1;
 }
 
-void testPso(double (*function)(std::vector<double>&),
+void testPso(ILog &logger,
+             double (*function)(std::vector<double>&),
              int parametersCount,
              SwarmConfig swarmConfig,
              string description) {
-    ILog* logger = new ConsoleLogger();
-    ObjectiveFunction objectiveFunction(*logger, function, parametersCount);
 
-    Swarm swarm(*logger, swarmConfig, objectiveFunction);
+    ObjectiveFunction objectiveFunction(logger, function, parametersCount);
+    Swarm swarm(logger, swarmConfig, objectiveFunction);
     auto result = swarm.GetFunctionMinimum();
 
     //write down the results
@@ -99,23 +99,25 @@ void testPso(double (*function)(std::vector<double>&),
     }
     cout << ") = " << to_string(swarm.GetBestSwarmResult()) << endl;
     cout << "-----------------x-----------------" << endl;
-
-    delete logger;
 }
 
 int main()
 {
+    ILog* logger = new ConsoleLogger();
+
     cout << "SPHERE FUNCTION" << endl;
-    SwarmConfig sphereConfig;
+    SwarmConfig sphereConfig(*logger);
     sphereConfig.particleFactors = new ParticleFactors(0,3,4);
     sphereConfig.particlesCount = 50;
     sphereConfig.iterationCount = 1000;
-    testPso(sphereFunction, 2, sphereConfig, "expected min -> f(0,0) = 1");
+    testPso(*logger, sphereFunction, 2, sphereConfig, "expected min -> f(0,0) = 1");
 
     cout << "BOOTH FUNCTION" << endl;
-    SwarmConfig boothConfig;
+    SwarmConfig boothConfig(*logger);
     boothConfig.particleFactors = new ParticleFactors(0,3,4);
     boothConfig.particlesCount = 50;
     boothConfig.iterationCount = 1000;
-    testPso(boothFunction, 2, boothConfig, "expected min -> f(1,3) = 0");
+    testPso(*logger, boothFunction, 2, boothConfig, "expected min -> f(1,3) = 0");
+
+    delete logger;
 }
