@@ -4,7 +4,8 @@
 #include <random>
 #include <ctime>
 
-#include "randomnumbersgenerator.h"
+#include "irandomnumbersgenerator.h"
+#include "ranlux24numbersgenerator.h"
 #include "particlefactors.h"
 
 class SwarmConfig
@@ -15,7 +16,7 @@ public:
 
     int particlesCount;
     int iterationCount;
-    RandomNumbersGenerator* randomNumbersGenerator;
+    IRandomNumbersGenerator* randomNumbersGenerator;
     ParticleFactors* particleFactors;
 
 private:

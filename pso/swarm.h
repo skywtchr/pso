@@ -20,6 +20,7 @@ public:
     ~Swarm();
 
     std::vector<double> GetFunctionMinimum();
+    double GetBestSwarmResult();
 
 private:
     ILog *_logger;

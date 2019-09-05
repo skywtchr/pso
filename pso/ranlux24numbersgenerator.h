@@ -4,11 +4,13 @@
 #include <random>
 #include <ctime>
 
-class RandomNumbersGenerator
+#include "irandomnumbersgenerator.h"
+
+class Ranlux24NumbersGenerator : public IRandomNumbersGenerator
 {
 public:
-    RandomNumbersGenerator();
-    ~RandomNumbersGenerator();
+    Ranlux24NumbersGenerator();
+    ~Ranlux24NumbersGenerator();
 
     double GenerateRandomValue(std::uniform_real_distribution<> &dist);
 

@@ -5,9 +5,9 @@
 class ParticleFactors
 {
 public:
-    ParticleFactors(double GetSelfTrust,
-                    double GetSelfExpirienceTrust,
-                    double GetGroupExpirienceTrust);
+    ParticleFactors(double selfTrust,
+                    double selfExpirienceTrust,
+                    double groupExpirienceTrust);
 
     double GetSelfTrust() const;
     double GetSelfExpirienceTrust() const;

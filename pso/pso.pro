@@ -9,16 +9,17 @@ SOURCES += \
         objectivefunction.cpp \
         particle.cpp \
         particlefactors.cpp \
-        randomnumbersgenerator.cpp \
+        ranlux24numbersgenerator.cpp \
         swarm.cpp \
         swarmconfig.cpp
 
 HEADERS += \
     consolelogger.h \
     ilog.h \
+    irandomnumbersgenerator.h \
     objectivefunction.h \
     particle.h \
     particlefactors.h \
-    randomnumbersgenerator.h \
+    ranlux24numbersgenerator.h \
     swarm.h \
     swarmconfig.h

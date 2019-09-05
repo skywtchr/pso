@@ -9,7 +9,7 @@ ConsoleLogger::~ConsoleLogger() {
 }
 
 void ConsoleLogger::LogInfo(std::string message) {
-    std::cout << "INFO: " << message << std::endl;
+    std::cout << message << std::endl;
 }
 
 void ConsoleLogger::LogWarning(std::string message) {

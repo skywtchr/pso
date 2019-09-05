@@ -24,6 +24,11 @@ std::vector<double> Swarm::GetFunctionMinimum()
     return *_bestSwarmPosition;
 }
 
+double Swarm::GetBestSwarmResult()
+{
+    return _bestSwarmResult;
+}
+
 void Swarm::CreateParticles()
 {
     for(int i = 0; i<_config->particlesCount; i++) {

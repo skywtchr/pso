@@ -3,12 +3,11 @@
 Particle::Particle(ILog &logger,
                    ParticleFactors &factors,
                    ObjectiveFunction &objectiveFunction,
-                   RandomNumbersGenerator &randomNumbersGenerator,
+                   IRandomNumbersGenerator &randomNumbersGenerator,
                    std::vector<double>* startPosition,
                    std::vector<double>* startVelocity,
                    std::vector<double>** bestSwarmPosition)
 {
-    CheckInitialConditions();
     //configs
     _logger = &logger;
     _factors = &factors;
@@ -20,6 +19,8 @@ Particle::Particle(ILog &logger,
     //velocity
     _velocity = startVelocity;
     _bestSwarmPosition = bestSwarmPosition;
+    //validation after assigning
+    ValidateInitialValues();
     //result
     _result = _objectiveFunction->GetResult(*_position);
     _bestParticleResult = _result;
@@ -34,9 +35,10 @@ void Particle::Move()
     UpdateResultAndBestValues();
 }
 
-void Particle::CheckInitialConditions()
+void Particle::ValidateInitialValues()
 {
-    if (_position->size() > 0 && _position->size() == _velocity->size()) {
+    if (static_cast<int>(_position->size()) == _objectiveFunction->GetVariablesCount()
+            && _position->size() == _velocity->size()) {
         return;
     }
     else {

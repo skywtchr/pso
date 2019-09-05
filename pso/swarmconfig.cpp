@@ -15,6 +15,6 @@ void SwarmConfig::SetDefaultValues()
 {
     particlesCount = 30;
     iterationCount = 500;
-    randomNumbersGenerator = new RandomNumbersGenerator();
+    randomNumbersGenerator = new Ranlux24NumbersGenerator();
     particleFactors = new ParticleFactors(0, 0, 5);
 }
