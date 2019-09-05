@@ -12,20 +12,20 @@ SwarmConfig::~SwarmConfig()
     delete particleFactors;
 }
 
-Domain SwarmConfig::GetVariableDomain(int variableNumber)
+Domain SwarmConfig::GetVariableStartDomain(int variableNumber)
 {
-    if (variablesDomains == nullptr) {
+    if (variablesStartDomains == nullptr) {
         return Domain(-1000, 1000);
     }
     if (variableNumber < 0 ||
-            variableNumber > (static_cast<int>(variablesDomains->size()))) {
-        auto errorMsg = "Out of bounds variableNumver: "
+            variableNumber > (static_cast<int>(variablesStartDomains->size()))) {
+        auto errorMsg = "Out of bounds variableNumber: "
                 + std::to_string(variableNumber);
         _logger->LogError(errorMsg);
         throw std::invalid_argument(errorMsg);
     }
 
-    return (*variablesDomains)[static_cast<size_t>(variableNumber)];
+    return (*variablesStartDomains)[static_cast<size_t>(variableNumber)];
 }
 
 void SwarmConfig::SetDefaultValues()
@@ -34,4 +34,5 @@ void SwarmConfig::SetDefaultValues()
     iterationCount = 500;
     randomNumbersGenerator = new Ranlux24NumbersGenerator();
     particleFactors = new ParticleFactors(0, 0, 5);
+    variablesStartDomains = nullptr;
 }

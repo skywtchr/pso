@@ -24,9 +24,9 @@ public:
     int iterationCount;
     IRandomNumbersGenerator* randomNumbersGenerator;
     ParticleFactors* particleFactors;
-    std::vector<Domain>* variablesDomains;
+    std::vector<Domain>* variablesStartDomains;
 
-    Domain GetVariableDomain(int variableNumber);
+    Domain GetVariableStartDomain(int variableNumber);
 
 private:
     void SetDefaultValues();

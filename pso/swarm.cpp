@@ -78,8 +78,10 @@ std::vector<double>* Swarm::FixStartPosition()
     std::vector<double>* result = new std::vector<double>();
     _variablesToDelete.push_back(result);
 
-    std::uniform_real_distribution<> dist(-1000, 1000);
     for (int i=0; i<_objectiveFunction->GetVariablesCount(); i++) {
+        auto startDomain = _config->GetVariableStartDomain(i);
+
+        std::uniform_real_distribution<> dist(startDomain.GetLowerLimit(), startDomain.GetUpperLimit());
         auto randomValue
                 = _config->randomNumbersGenerator->GenerateRandomValue(dist);
         result->push_back(randomValue);
