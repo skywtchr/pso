@@ -63,12 +63,12 @@ void Swarm::RunPsoAlgorithm()
 {
     for (int i=0; i<_config->iterationCount; i++) {
         for (auto particle : _particles) {
+            particle.Move();
             auto bestParticleResult = particle.GetBestResult();
             if (bestParticleResult < _bestSwarmResult) {
                 _bestSwarmResult = bestParticleResult;
                 _bestSwarmPosition = particle.GetPosition();
             }
-            particle.Move();
         }
     }
 }
