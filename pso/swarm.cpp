@@ -1,17 +1,14 @@
 #include "swarm.h"
 
-Swarm::Swarm(ILog &logger, int particlesCount, int iterationCount, double (*objectiveFunction)(std::vector<int>&),
-    int variablesCount) {
+Swarm::Swarm(ILog &logger,
+             SwarmConfig &config,
+             ObjectiveFunction &objectiveFunction) {
     _logger = &logger;
-    _particlesCount = particlesCount;
-    _iterationCount = iterationCount;
-
-    _objectiveFunction = objectiveFunction;
-    _variablesCount = variablesCount;
+    _config = &config;
+    _objectiveFunction = &objectiveFunction;
 }
 
 Swarm::~Swarm() {
-
 }
 
 std::vector<int> Swarm::Start() {
