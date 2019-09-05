@@ -17,9 +17,7 @@ Swarm::~Swarm() {
 std::vector<double> Swarm::GetFunctionMinimum()
 {
     CreateParticles();
-    //initialize best values
-    _bestSwarmPosition = _particles[0].GetPosition();
-    _bestSwarmResult = _objectiveFunction->GetResult(*_bestSwarmPosition);
+    FindBestSwarmPositionAndResult();
     RunPsoAlgorithm();
     return *_bestSwarmPosition;
 }
@@ -37,6 +35,19 @@ void Swarm::CreateParticles()
     }
 }
 
+void Swarm::FindBestSwarmPositionAndResult()
+{
+    _bestSwarmPosition = _particles[0].GetPosition();
+    _bestSwarmResult = _objectiveFunction->GetResult(*_bestSwarmPosition);
+    for (auto particle : _particles) {
+        auto bestParticleResult = particle.GetBestResult();
+        if (bestParticleResult < _bestSwarmResult) {
+            _bestSwarmResult = bestParticleResult;
+            _bestSwarmPosition = particle.GetPosition();
+        }
+    }
+}
+
 Particle Swarm::GetNewParticle()
 {
     return Particle(*_logger,
@@ -51,7 +62,6 @@ Particle Swarm::GetNewParticle()
 void Swarm::RunPsoAlgorithm()
 {
     for (int i=0; i<_config->iterationCount; i++) {
-
         for (auto particle : _particles) {
             auto bestParticleResult = particle.GetBestResult();
             if (bestParticleResult < _bestSwarmResult) {

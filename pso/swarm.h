@@ -31,6 +31,7 @@ private:
     double _bestSwarmResult;
 
     void CreateParticles();
+    void FindBestSwarmPositionAndResult();
     Particle GetNewParticle();
     void RunPsoAlgorithm();
     std::vector<double> *FixStartPosition();

@@ -39,9 +39,9 @@ int main()
 
     //configuration prepare
     SwarmConfig swarmConfig;
-    swarmConfig.particleFactors = new ParticleFactors(1,1,10);
-    swarmConfig.particlesCount = 100;
-    swarmConfig.iterationCount = 1000;
+    swarmConfig.particleFactors = new ParticleFactors(0,0,10);
+    swarmConfig.particlesCount = 10;
+    swarmConfig.iterationCount = 500;
     //----------------x----------------
 
     //swarm initialize
