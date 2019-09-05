@@ -5,12 +5,16 @@
 
 #include "ilog.h"
 #include "particle.h"
+#include "swarmconfig.h"
 
 class Swarm {
 
 public:
-    Swarm(ILog &logger, int particlesCount, int iterationCount, double (*objectiveFunction)(std::vector<int>&),
-    int variablesCount);
+    Swarm(ILog &logger,
+          SwarmConfig &config,
+          double (*objectiveFunction)(std::vector<int>&),
+          int variablesCount);
+
     ~Swarm();
 
     std::vector<int> Start();

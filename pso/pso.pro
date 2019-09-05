@@ -6,11 +6,15 @@ CONFIG -= qt
 SOURCES += \
         consolelogger.cpp \
         main.cpp \
+        objectivefunction.cpp \
         particle.cpp \
-        swarm.cpp
+        swarm.cpp \
+        swarmconfig.cpp
 
 HEADERS += \
     consolelogger.h \
     ilog.h \
+    objectivefunction.h \
     particle.h \
-    swarm.h
+    swarm.h \
+    swarmconfig.h
