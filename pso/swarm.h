@@ -34,7 +34,7 @@ private:
     void FindBestSwarmPositionAndResult();
     Particle GetNewParticle();
     void RunPsoAlgorithm();
-    std::vector<double> *FixStartPosition();
+    std::vector<double>* FixStartPosition();
     std::vector<double>* FixStartVelocity();
 
     std::list<std::vector<double>*> _variablesToDelete;
