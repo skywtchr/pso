@@ -2,6 +2,7 @@
 #define SWARM_H
 
 #include <vector>
+#include <list>
 #include <random>
 
 #include "ilog.h"
@@ -18,20 +19,23 @@ public:
           ObjectiveFunction &objectiveFunction);
     ~Swarm();
 
-    std::vector<int> Start();
+    std::vector<double> GetFunctionMinimum();
 
 private:
     ILog *_logger;
     SwarmConfig* _config;
     ObjectiveFunction* _objectiveFunction;
     std::vector<Particle> _particles;
-    std::vector<int>* _bestSwarmPosition;
+    std::vector<double>* _bestSwarmPosition;
     double _bestSwarmResult;
 
     void CreateParticles();
-    Particle GetParticle();
-    std::vector<int>* FixStartPosition();
-    std::vector<int>* FixStartVelocity();
+    Particle GetNewParticle();
+    void RunPsoAlgorithm();
+    std::vector<double> *FixStartPosition();
+    std::vector<double>* FixStartVelocity();
+
+    std::list<std::vector<double>*> _variablesToDelete;
 };
 
 #endif // SWARM_H

@@ -20,7 +20,7 @@ public:
     Particle(ILog &logger,
         ParticleFactors &factors,
         ObjectiveFunction &objectiveFunction,
-        RandomNumbersGenerator* randomNumbersGenerator,
+        RandomNumbersGenerator &randomNumbersGenerator,
         std::vector<double>* startPosition,
         std::vector<double>* startVelocity,
         std::vector<double>** bestSwarmPosition);
@@ -36,7 +36,7 @@ private:
     ILog *_logger;
     ParticleFactors *_factors;
     ObjectiveFunction *_objectiveFunction;
-    RandomNumbersGenerator* _randomNumbersGenerator;
+    RandomNumbersGenerator *_randomNumbersGenerator;
 
     std::vector<double> *_position;
     std::vector<double> *_bestParticlePosition;

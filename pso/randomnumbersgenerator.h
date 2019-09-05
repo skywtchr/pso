@@ -8,6 +8,7 @@ class RandomNumbersGenerator
 {
 public:
     RandomNumbersGenerator();
+    ~RandomNumbersGenerator();
 
     double GenerateRandomValue(std::uniform_real_distribution<> &dist);
 

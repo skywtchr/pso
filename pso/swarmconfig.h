@@ -5,15 +5,18 @@
 #include <ctime>
 
 #include "randomnumbersgenerator.h"
+#include "particlefactors.h"
 
 class SwarmConfig
 {
 public:
     SwarmConfig();
+    ~SwarmConfig();
 
     int particlesCount;
     int iterationCount;
-    RandomNumbersGenerator randomNumbersGenerator;
+    RandomNumbersGenerator* randomNumbersGenerator;
+    ParticleFactors* particleFactors;
 
 private:
     void SetDefaultValues();

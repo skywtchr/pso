@@ -3,7 +3,7 @@
 Particle::Particle(ILog &logger,
                    ParticleFactors &factors,
                    ObjectiveFunction &objectiveFunction,
-                   RandomNumbersGenerator *randomNumbersGenerator,
+                   RandomNumbersGenerator &randomNumbersGenerator,
                    std::vector<double>* startPosition,
                    std::vector<double>* startVelocity,
                    std::vector<double>** bestSwarmPosition)
@@ -13,7 +13,7 @@ Particle::Particle(ILog &logger,
     _logger = &logger;
     _factors = &factors;
     _objectiveFunction = &objectiveFunction;
-    _randomNumbersGenerator = randomNumbersGenerator;
+    _randomNumbersGenerator = &randomNumbersGenerator;
     //position
     _position = startPosition;
     _bestParticlePosition = startPosition;
