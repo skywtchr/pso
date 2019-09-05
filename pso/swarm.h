@@ -5,6 +5,7 @@
 
 #include "ilog.h"
 #include "particle.h"
+#include "particlefactors.h"
 #include "swarmconfig.h"
 #include "objectivefunction.h"
 

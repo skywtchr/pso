@@ -7,6 +7,6 @@ SwarmConfig::SwarmConfig()
 
 void SwarmConfig::SetDefaultValues()
 {
-    _particlesCount = 30;
-    _iterationCount = 500;
+    particlesCount = 30;
+    iterationCount = 500;
 }

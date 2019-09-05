@@ -7,8 +7,8 @@ class SwarmConfig
 public:
     SwarmConfig();
 
-    int _particlesCount;
-    int _iterationCount;
+    int particlesCount;
+    int iterationCount;
 
 private:
     void SetDefaultValues();

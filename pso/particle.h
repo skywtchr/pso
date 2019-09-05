@@ -10,18 +10,18 @@
 #include <random>
 
 #include "ilog.h"
+#include "objectivefunction.h"
+#include "particlefactors.h"
 
 class Particle {
 
 public:
     Particle(ILog &logger,
-        double c1,
-        double c2,
-        double c3,
+        ParticleFactors &factors,
+        ObjectiveFunction &objectiveFunction,
         std::vector<int>* startPosition,
         std::vector<int>* startVelocity,
-        std::vector<int>** bestSwarmPosition,
-        double (*objectiveFunction)(std::vector<int>&));
+        std::vector<int>** bestSwarmPosition);
     ~Particle();
 
     double UpdateCurrentPositionResult();
@@ -29,25 +29,20 @@ public:
     std::vector<int>* GetPosition();
 
 private:
-    // fields
     ILog *_logger;
 
-    double (*_objectiveFunction)(std::vector<int>&);
+    ObjectiveFunction *_objectiveFunction;
 
     std::vector<int> *_position;
     std::vector<int> *_velocity;
 
     std::vector<int> *_bestParticlePosition;
-    std::vector<int>** _bestSwarmPosition;
+    std::vector<int> **_bestSwarmPosition;
 
     double _bestParticleResult;
 
-    // std::set<Particle*> _neighbours;
-    // std::vector<int> _bestNeighboursPosition;
+    ParticleFactors *_factors;
 
-    double _c1,_c2,_c3;
-
-    // methods
     void CheckStartConditions();
     void UpdateVelocity(double r1, double r2, double r3);
     void UpdatePosition();

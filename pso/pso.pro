@@ -8,6 +8,7 @@ SOURCES += \
         main.cpp \
         objectivefunction.cpp \
         particle.cpp \
+        particlefactors.cpp \
         swarm.cpp \
         swarmconfig.cpp
 
@@ -16,5 +17,6 @@ HEADERS += \
     ilog.h \
     objectivefunction.h \
     particle.h \
+    particlefactors.h \
     swarm.h \
     swarmconfig.h

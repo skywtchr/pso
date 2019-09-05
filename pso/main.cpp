@@ -6,6 +6,8 @@
 #include "consolelogger.h"
 #include "particle.h"
 #include "swarm.h"
+#include "swarmconfig.h"
+#include "objectivefunction.h"
 
 using namespace std;
 
@@ -18,7 +20,9 @@ int main() {
 
     ILog* logger = new ConsoleLogger();
 
-    Swarm swarm(*logger, 30, 500, &testFunc, 2);
+    SwarmConfig swarmConfig;
+    ObjectiveFunction objectiveFunction(*logger, &testFunc, 2);
+    Swarm swarm(*logger, swarmConfig, objectiveFunction);
     logger->LogInfo("Swarm initialized.");
 
     logger->LogInfo("Starting pso alghoritm...");
@@ -29,6 +33,4 @@ int main() {
     for(auto pos : result) {
         logger->LogInfo(to_string(pos));
     }
-
-    getchar();
 }

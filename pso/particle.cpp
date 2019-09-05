@@ -1,36 +1,29 @@
 #include "particle.h"
 
 Particle::Particle(ILog &logger,
-        double c1,
-        double c2,
-        double c3,
-        std::vector<int> *startPosition,
-        std::vector<int> *startVelocity,
-        std::vector<int>** bestSwarmPosition,
-        double (*objectiveFunction)(std::vector<int>&))
+                   ParticleFactors &factors,
+                   ObjectiveFunction &objectiveFunction,
+                   std::vector<int>* startPosition,
+                   std::vector<int>* startVelocity,
+                   std::vector<int>** bestSwarmPosition)
 {
     _logger = &logger;
     _position = startPosition;
     _bestParticlePosition = startPosition;
     _velocity = startVelocity;
     _bestSwarmPosition = bestSwarmPosition;
-
-    _objectiveFunction = objectiveFunction;
-
-    _c1 = c1;
-    _c2 = c2;
-    _c3 = c3;
+    _objectiveFunction = &objectiveFunction;
+    _factors = &factors;
 
     CheckStartConditions();
-
-    _bestParticleResult = (*_objectiveFunction)(*_position);
+    _bestParticleResult = _objectiveFunction->GetResult(*_position);
 }
 
 Particle::~Particle() {
 }
 
 double Particle::UpdateCurrentPositionResult() {
-    auto result = (*_objectiveFunction)(*_position);
+    auto result = _objectiveFunction->GetResult(*_position);
 
     if (result < _bestParticleResult) {
         _bestParticleResult = result;
@@ -57,15 +50,11 @@ void Particle::CheckStartConditions() {
 
 void Particle::UpdateVelocity(double r1, double r2, double r3) {
 
-    // std::random_device rd;
-    // std::ranlux24_base e2(rd());
-    // std::uniform_real_distribution<> dist(0, 1);
-
     for(int i=0; i<_velocity->size(); i++) {
         (*_velocity)[i] =
-            _c1*r1*(*_velocity)[i]
-            + _c2*r2*((*_bestParticlePosition)[i] - (*_position)[i])
-            + _c3*r3*((**_bestSwarmPosition)[i] - (*_position)[i]);
+            _factors->GetSelfTrust()*r1*(*_velocity)[i]
+            + _factors->GetSelfExpirienceTrust()*r2*((*_bestParticlePosition)[i] - (*_position)[i])
+            + _factors->GetGroupExpirienceTrust()*r3*((**_bestSwarmPosition)[i] - (*_position)[i]);
     }
 }
 
