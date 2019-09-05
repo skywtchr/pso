@@ -35,7 +35,7 @@ double boothFunction(std::vector<double>& input)
 int main()
 {
     ILog* logger = new ConsoleLogger();
-    ObjectiveFunction objectiveFunction(*logger, &boothFunction, 2);
+    ObjectiveFunction objectiveFunction(*logger, &testFunction, 2);
 
     //configuration prepare
     SwarmConfig swarmConfig;
