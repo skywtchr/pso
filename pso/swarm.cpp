@@ -17,10 +17,6 @@ std::vector<int> Swarm::Start() {
     _bestSwarmPosition = _particles[0].GetPosition();
     _bestSwarmResult = _objectiveFunction->GetResult(*_bestSwarmPosition);
 
-    std::random_device rd;
-    std::ranlux24_base gen(rd());
-    std::uniform_real_distribution<> dist(0, 1);
-
     for (int i=0; i<_config->iterationCount; i++) {
 
         for (auto particle : _particles) {
@@ -29,12 +25,7 @@ std::vector<int> Swarm::Start() {
                 _bestSwarmResult = result;
                 _bestSwarmPosition = particle.GetPosition();
             }
-
-            double r1 = dist(gen);
-            double r2 = dist(gen);
-            double r3 = dist(gen);
-
-            particle.Move(r1,r2,r3);
+            particle.Move();
         }
     }
 
@@ -50,11 +41,12 @@ void Swarm::CreateParticles() {
 
 Particle Swarm::GetParticle() {
 
-    ParticleFactors particleFactors(0, 0, 5);
+    ParticleFactors particleFactors(0, 0, 10);
 
     return Particle(*_logger,
                     particleFactors,
                     *_objectiveFunction,
+                    &_config->randomNumbersGenerator,
                     FixStartPosition(),
                     FixStartVelocity(),
                     &_bestSwarmPosition);
@@ -64,14 +56,13 @@ std::vector<int>* Swarm::FixStartPosition()
 {
     std::vector<int>* result = new std::vector<int>();
 
-    std::random_device rd;
-    std::mt19937  gen(rd());
     std::uniform_real_distribution<> dist(-1000, 1000);
 
     for (int i=0; i<_objectiveFunction->GetVariablesCount(); i++) {
-        result->push_back(dist(gen));
+        auto randomValue
+                = _config->randomNumbersGenerator.GenerateRandomValue(dist);
+        result->push_back(randomValue);
     }
-
     return result;
 }
 
@@ -81,6 +72,5 @@ std::vector<int>* Swarm::FixStartVelocity()
     for (int i=0; i<_objectiveFunction->GetVariablesCount(); i++) {
         result->push_back(0);
     }
-
     return result;
 }

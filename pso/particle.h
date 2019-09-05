@@ -12,6 +12,7 @@
 #include "ilog.h"
 #include "objectivefunction.h"
 #include "particlefactors.h"
+#include "randomnumbersgenerator.h"
 
 class Particle {
 
@@ -19,19 +20,20 @@ public:
     Particle(ILog &logger,
         ParticleFactors &factors,
         ObjectiveFunction &objectiveFunction,
+        RandomNumbersGenerator* randomNumbersGenerator,
         std::vector<int>* startPosition,
         std::vector<int>* startVelocity,
         std::vector<int>** bestSwarmPosition);
     ~Particle();
 
     double UpdateCurrentPositionResult();
-    void Move(double r1, double r2, double r3);
+    void Move();
     std::vector<int>* GetPosition();
 
 private:
     ILog *_logger;
-
     ObjectiveFunction *_objectiveFunction;
+    RandomNumbersGenerator* _randomNumbersGenerator;
 
     std::vector<int> *_position;
     std::vector<int> *_velocity;

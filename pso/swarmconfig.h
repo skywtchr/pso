@@ -1,6 +1,10 @@
 #ifndef SWARMCONFIG_H
 #define SWARMCONFIG_H
 
+#include <random>
+#include <ctime>
+
+#include "randomnumbersgenerator.h"
 
 class SwarmConfig
 {
@@ -9,6 +13,7 @@ public:
 
     int particlesCount;
     int iterationCount;
+    RandomNumbersGenerator randomNumbersGenerator;
 
 private:
     void SetDefaultValues();

@@ -2,7 +2,7 @@
 
 SwarmConfig::SwarmConfig()
 {
-
+    SetDefaultValues();
 }
 
 void SwarmConfig::SetDefaultValues()

@@ -2,6 +2,7 @@
 #define SWARM_H
 
 #include <vector>
+#include <random>
 
 #include "ilog.h"
 #include "particle.h"

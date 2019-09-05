@@ -9,6 +9,7 @@ SOURCES += \
         objectivefunction.cpp \
         particle.cpp \
         particlefactors.cpp \
+        randomnumbersgenerator.cpp \
         swarm.cpp \
         swarmconfig.cpp
 
@@ -18,5 +19,6 @@ HEADERS += \
     objectivefunction.h \
     particle.h \
     particlefactors.h \
+    randomnumbersgenerator.h \
     swarm.h \
     swarmconfig.h
