@@ -172,13 +172,13 @@ int main()
 //    boothConfig.iterationCount = 1000;
 //    TestPso(*logger, boothFunction, 2, boothConfig, "Expected min -> f(1,3) = 0");
 
-    cout << "EASON FUNCTION" << endl;
-    SwarmConfig easonConfig(*logger);
-    easonConfig.particleFactors = new ParticleFactors(1,3,4);
-    easonConfig.particlesCount = 50;
-    easonConfig.iterationCount = 100000;
-    easonConfig.velocityLimit = new VelocityLimit(10, VelocityLimitMode::StandardLimit);
-    TestPso(*logger, easonFunction, 2, easonConfig, "Expected min -> f(PI,PI) = -1");
+//    cout << "EASON FUNCTION" << endl;
+//    SwarmConfig easonConfig(*logger);
+//    easonConfig.particleFactors = new ParticleFactors(0.65,3,2);
+//    easonConfig.particlesCount = 200;
+//    easonConfig.iterationCount = 10000;
+//    easonConfig.velocityLimit = new VelocityLimit(10, VelocityLimitMode::LenghtLimit);
+//    TestPso(*logger, easonFunction, 2, easonConfig, "Expected min -> f(PI,PI) = -1");
 
 //    cout << "LEVI FUNCTION" << endl;
 //    SwarmConfig leviConfig(*logger);
@@ -187,16 +187,20 @@ int main()
 //    leviConfig.iterationCount = 1000;
 //    TestPso(*logger, leviFunction, 2, leviConfig, "Expected min -> f(1,1) = 0");
 
-//    cout << "MC CORNICK FUNCTION" << endl;
-//    SwarmConfig mcCornickConfig(*logger);
-//    mcCornickConfig.particleFactors = new ParticleFactors(0,3,4);
-//    mcCornickConfig.particlesCount = 50;
-//    mcCornickConfig.iterationCount = 1000;
-//    std::vector<Domain> domains;
-//    domains.push_back(Domain(-1.5, 4));
-//    domains.push_back(Domain(-3, 4));
-//    mcCornickConfig.variablesStartDomains = &domains;
-//    TestPso(*logger, mcCornickFunction, 2, mcCornickConfig, "Expected min -> f(-0.54719,-1.54719) = -1.9133");
+    cout << "MC CORNICK FUNCTION" << endl;
+    SwarmConfig mcCornickConfig(*logger);
+    mcCornickConfig.particleFactors = new ParticleFactors(0,3,3);
+    mcCornickConfig.particlesCount = 50;
+    mcCornickConfig.iterationCount = 1000;
+
+    std::vector<Domain> domains;
+    domains.push_back(Domain(-1.5, 4));
+    domains.push_back(Domain(-3, 4));
+    mcCornickConfig.variablesStartDomains = &domains;
+
+    mcCornickConfig.velocityLimit = new VelocityLimit(2, VelocityLimitMode::StandardLimit);
+
+    TestPso(*logger, mcCornickFunction, 2, mcCornickConfig, "Expected min -> f(-0.54719,-1.54719) = -1.9133");
 
     delete logger;
 }
