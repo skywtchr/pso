@@ -70,6 +70,10 @@ void Particle::UpdateVelocity()
         (*_velocity)[i] = selfVelocityPart + selfExpiriencePart + groupExpiriencePart;
     }
     FixVelocityToBeWithinLimit();
+
+    for(auto dupa : *_velocity) {
+        _logger->LogWarning(std::to_string(dupa));
+    }
 }
 
 void Particle::FixVelocityToBeWithinLimit()
@@ -79,8 +83,14 @@ void Particle::FixVelocityToBeWithinLimit()
     }
     if (_velocityLimit->GetMode() == VelocityLimitMode::StandardLimit) {
         for (size_t i=0; i<_velocity->size(); i++) {
-            if (_velocity->at(i) > _velocityLimit->GetMaxValue()) {
-                _velocity->at(i) = _velocityLimit->GetMaxValue();
+            auto current = _velocity->at(i);
+            auto max = _velocityLimit->GetMaxValue();
+            auto min = max*(-1);
+            if (current > max) {
+                _velocity->at(i) = max;
+            }
+            if (current < min) {
+                _velocity->at(i) = min;
             }
         }
         return;
@@ -90,7 +100,11 @@ void Particle::FixVelocityToBeWithinLimit()
         for (size_t i=0; i<_velocity->size(); i++) {
             auto current = _velocity->at(i);
             auto max = _velocityLimit->GetMaxValue();
+            auto min = max*(-1);
             if (current > max) {
+                _velocity->at(i) = max * current / velocityLenght;
+            }
+            if (current < min) {
                 _velocity->at(i) = max * current / velocityLenght;
             }
         }

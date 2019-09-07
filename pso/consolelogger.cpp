@@ -21,7 +21,7 @@ void ConsoleLogger::LogInfo(std::string message) {
 }
 
 void ConsoleLogger::LogWarning(std::string message) {
-    if (_mode != ConsoleLoggerMode::INFO && _mode != ConsoleLoggerMode::INFO) {
+    if (_mode == ConsoleLoggerMode::ERROR) {
         return;
     }
     std::cout << "WARN: " << message << std::endl;
