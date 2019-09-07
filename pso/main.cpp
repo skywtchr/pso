@@ -145,7 +145,7 @@ int main()
     SwarmConfig sphereConfig(*logger);
     sphereConfig.particleFactors = new ParticleFactors(0,3,4);
     sphereConfig.particlesCount = 50;
-    sphereConfig.iterationCount = 1000;
+    sphereConfig.iterationCount = 100000;
     TestPso(*logger, sphereFunction, 2, sphereConfig, "Expected min -> f(0,0) = 1");
 
     cout << "BOOTH FUNCTION" << endl;

@@ -18,6 +18,8 @@ public:
     Swarm(ILog &logger,
           SwarmConfig &config,
           ObjectiveFunction &objectiveFunction);
+    Swarm(ILog &logger,
+          ObjectiveFunction &objectiveFunction);
     ~Swarm();
 
     void SearchFunctionMinimumAsync();
@@ -48,7 +50,10 @@ private:
     int _iterationCounter;
     bool _isFinished;
     std::future<void> _searchingFuture;
-    std::list<std::vector<double>*> _variablesToDelete;
+
+    //cleanup
+    SwarmConfig* _configToDelete;
+    std::list<std::vector<double>*> _vectorsToDelete;
 };
 
 #endif // SWARM_H

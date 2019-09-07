@@ -8,12 +8,24 @@ Swarm::Swarm(ILog &logger,
     _objectiveFunction = &objectiveFunction;
     _isFinished = false;
     _iterationCounter = 0;
+    _configToDelete = nullptr;
+}
+
+Swarm::Swarm(ILog &logger, ObjectiveFunction &objectiveFunction)
+{
+    _logger = &logger;
+    _config = new SwarmConfig(logger);
+    _configToDelete = _config;
+    _objectiveFunction = &objectiveFunction;
+    _isFinished = false;
+    _iterationCounter = 0;
 }
 
 Swarm::~Swarm() {
-    for (auto var : _variablesToDelete) {
+    for (auto var : _vectorsToDelete) {
         delete var;
     }
+    delete _configToDelete;
 }
 
 void Swarm::SearchFunctionMinimumAsync()
@@ -117,7 +129,7 @@ void Swarm::RunPsoAlgorithm()
 std::vector<double>* Swarm::FixStartPosition()
 {
     std::vector<double>* result = new std::vector<double>();
-    _variablesToDelete.push_back(result);
+    _vectorsToDelete.push_back(result);
 
     for (int i=0; i<_objectiveFunction->GetVariablesCount(); i++) {
         auto startDomain = _config->GetVariableStartDomain(i);
@@ -133,7 +145,7 @@ std::vector<double>* Swarm::FixStartPosition()
 std::vector<double>* Swarm::FixStartVelocity()
 {
     std::vector<double>* result = new std::vector<double>();
-    _variablesToDelete.push_back(result);
+    _vectorsToDelete.push_back(result);
 
     for (int i=0; i<_objectiveFunction->GetVariablesCount(); i++) {
         result->push_back(0);
