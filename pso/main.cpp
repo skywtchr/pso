@@ -158,25 +158,26 @@ int main()
 //    threeConfig.iterationCount = 100000;
 //    TestPso(*logger, threeArgsFunction, 3, threeConfig, "Expected min -> f(1,1,2) = 1;");
 
-    cout << "SPHERE FUNCTION" << endl;
-    SwarmConfig sphereConfig(*logger);
-    sphereConfig.particleFactors = new ParticleFactors(0,3,4);
-    sphereConfig.particlesCount = 50;
-    sphereConfig.iterationCount = 10000;
-    TestPso(*logger, sphereFunction, 2, sphereConfig, "Expected min -> f(0,0) = 1");
+//    cout << "SPHERE FUNCTION" << endl;
+//    SwarmConfig sphereConfig(*logger);
+//    sphereConfig.particleFactors = new ParticleFactors(0,3,4);
+//    sphereConfig.particlesCount = 50;
+//    sphereConfig.iterationCount = 10000;
+//    TestPso(*logger, sphereFunction, 2, sphereConfig, "Expected min -> f(0,0) = 1");
 
-    cout << "BOOTH FUNCTION" << endl;
-    SwarmConfig boothConfig(*logger);
-    boothConfig.particleFactors = new ParticleFactors(0,3,4);
-    boothConfig.particlesCount = 50;
-    boothConfig.iterationCount = 1000;
-    TestPso(*logger, boothFunction, 2, boothConfig, "Expected min -> f(1,3) = 0");
+//    cout << "BOOTH FUNCTION" << endl;
+//    SwarmConfig boothConfig(*logger);
+//    boothConfig.particleFactors = new ParticleFactors(0,3,4);
+//    boothConfig.particlesCount = 50;
+//    boothConfig.iterationCount = 1000;
+//    TestPso(*logger, boothFunction, 2, boothConfig, "Expected min -> f(1,3) = 0");
 
     cout << "EASON FUNCTION" << endl;
     SwarmConfig easonConfig(*logger);
     easonConfig.particleFactors = new ParticleFactors(1,3,4);
     easonConfig.particlesCount = 50;
-    easonConfig.iterationCount = 10000;
+    easonConfig.iterationCount = 100000;
+    easonConfig.velocityLimit = new VelocityLimit(200, VelocityLimitMode::StandardLimit);
     TestPso(*logger, easonFunction, 2, easonConfig, "Expected min -> f(PI,PI) = -1");
 
 //    cout << "LEVI FUNCTION" << endl;
