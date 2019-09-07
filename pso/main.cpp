@@ -177,7 +177,7 @@ int main()
     easonConfig.particleFactors = new ParticleFactors(1,3,4);
     easonConfig.particlesCount = 50;
     easonConfig.iterationCount = 100000;
-    easonConfig.velocityLimit = new VelocityLimit(200, VelocityLimitMode::StandardLimit);
+    easonConfig.velocityLimit = new VelocityLimit(10, VelocityLimitMode::StandardLimit);
     TestPso(*logger, easonFunction, 2, easonConfig, "Expected min -> f(PI,PI) = -1");
 
 //    cout << "LEVI FUNCTION" << endl;

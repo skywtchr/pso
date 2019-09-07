@@ -70,10 +70,6 @@ void Particle::UpdateVelocity()
         (*_velocity)[i] = selfVelocityPart + selfExpiriencePart + groupExpiriencePart;
     }
     FixVelocityToBeWithinLimit();
-
-    for(auto dupa : *_velocity) {
-        _logger->LogWarning(std::to_string(dupa));
-    }
 }
 
 void Particle::FixVelocityToBeWithinLimit()
