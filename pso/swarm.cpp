@@ -16,9 +16,17 @@ Swarm::~Swarm() {
     }
 }
 
-std::thread *Swarm::SearchFunctionMinimumAsync()
+void Swarm::SearchFunctionMinimumAsync()
 {
-    return new std::thread(&Swarm::SearchFunctionMinimum, this);
+    auto asynOperation = [] (Swarm* s) {
+        s->SearchFunctionMinimum();
+    };
+    _searchingFuture = std::async(std::launch::async, asynOperation, this);
+}
+
+void Swarm::SearchFunctionMinimumSync()
+{
+    SearchFunctionMinimum();
 }
 
 std::vector<double> Swarm::GetBestSwarmPosition()
@@ -39,12 +47,12 @@ double Swarm::GetBestSwarmResult()
     return _bestSwarmResult;
 }
 
-int Swarm::GetProgressPercentageValue()
+int Swarm::GetPercentageProgress()
 {
     return 100 * _iterationCounter / _config->iterationCount;
 }
 
-int Swarm::GetProcessedIterationsCount()
+int Swarm::GetIterationProgress()
 {
     return _iterationCounter;
 }
