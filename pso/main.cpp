@@ -158,8 +158,6 @@ int main()
     threeConfig.iterationCount = 100000;
     TestPso(*logger, threeArgsFunction, 3, threeConfig, "Expected min -> f(0,0,0) = 1;");
 
-    return 0;
-
     cout << "SPHERE FUNCTION" << endl;
     SwarmConfig sphereConfig(*logger);
     sphereConfig.particleFactors = new ParticleFactors(0,3,4);
