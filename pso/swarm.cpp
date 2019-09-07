@@ -118,6 +118,7 @@ Particle Swarm::GetNewParticle()
 
 void Swarm::RunPsoAlgorithm()
 {
+    _logger->LogInfo("PSO algorithm started...");
     for (int i=0; i<_config->iterationCount; i++) {
         _iterationCounter = i+1;
         for (auto particle : _particles) {
@@ -129,6 +130,7 @@ void Swarm::RunPsoAlgorithm()
             }
         }
     }
+    _logger->LogInfo("PSO algorithm finished successfully.");
 }
 
 std::vector<double>* Swarm::FixStartPosition()

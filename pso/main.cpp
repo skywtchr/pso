@@ -24,6 +24,16 @@ double sphereFunction(std::vector<double>& input)
     return pow(x,2) + pow(y,2) + 1;
 }
 
+double threeArgsFunction(std::vector<double>& input)
+{
+    //expected min -> f(0,0,0) = 1;
+    auto x = input[0];
+    auto y = input[1];
+    auto z = input[2];
+
+    return pow(x-1,2) + pow(y-1,2) + pow(z-2,2) + 1;
+}
+
 double boothFunction(std::vector<double>& input)
 {
     //expected min -> f(1,3) = 0;
@@ -119,11 +129,11 @@ void TestPso(ILog &logger,
 
     //track the progress
     while(!swarm.IsFinished()) {
+        std::this_thread::sleep_for(std::chrono::milliseconds(100));
         auto percentageProgress = swarm.GetPercentageProgress();
         auto iterationProgress = swarm.GetIterationProgress();
         auto allIterationCount = swarm.GetIterationCount();
         WriteProgress(iterationProgress, allIterationCount, percentageProgress);
-        std::this_thread::sleep_for(std::chrono::milliseconds(100));
     }
     auto percentageProgress = swarm.GetPercentageProgress();
     auto iterationProgress = swarm.GetIterationProgress();
@@ -139,7 +149,16 @@ void TestPso(ILog &logger,
 
 int main()
 {
-    ILog* logger = new ConsoleLogger();
+    ILog* logger = new ConsoleLogger(ConsoleLoggerMode::WARN);
+
+    cout << "THREE ARGS FUNCTION" << endl;
+    SwarmConfig threeConfig(*logger);
+    threeConfig.particleFactors = new ParticleFactors(0,3,4);
+    threeConfig.particlesCount = 50;
+    threeConfig.iterationCount = 100000;
+    TestPso(*logger, threeArgsFunction, 3, threeConfig, "Expected min -> f(0,0,0) = 1;");
+
+    return 0;
 
     cout << "SPHERE FUNCTION" << endl;
     SwarmConfig sphereConfig(*logger);
