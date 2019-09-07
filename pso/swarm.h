@@ -4,6 +4,7 @@
 #include <vector>
 #include <list>
 #include <random>
+#include <thread>
 
 #include "ilog.h"
 #include "particle.h"
@@ -19,8 +20,13 @@ public:
           ObjectiveFunction &objectiveFunction);
     ~Swarm();
 
-    std::vector<double> GetFunctionMinimum();
+    std::thread *SearchFunctionMinimumAsync();
+    void SearchFunctionMinimum();
+    std::vector<double> GetBestSwarmPosition();
     double GetBestSwarmResult();
+    int GetProgressPercentageValue();
+    int GetProcessedIterationsCount();
+    bool IsFinished();
 
 private:
     ILog *_logger;
@@ -37,6 +43,8 @@ private:
     std::vector<double>* FixStartPosition();
     std::vector<double>* FixStartVelocity();
 
+    int _iterationCounter;
+    bool _isFinished;
     std::list<std::vector<double>*> _variablesToDelete;
 };
 

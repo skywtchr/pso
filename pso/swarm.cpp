@@ -6,6 +6,8 @@ Swarm::Swarm(ILog &logger,
     _logger = &logger;
     _config = &config;
     _objectiveFunction = &objectiveFunction;
+    _isFinished = false;
+    _iterationCounter = 0;
 }
 
 Swarm::~Swarm() {
@@ -14,17 +16,42 @@ Swarm::~Swarm() {
     }
 }
 
-std::vector<double> Swarm::GetFunctionMinimum()
+std::thread *Swarm::SearchFunctionMinimumAsync()
+{
+    return new std::thread(&Swarm::SearchFunctionMinimum, this);
+}
+
+std::vector<double> Swarm::GetBestSwarmPosition()
+{
+    return *_bestSwarmPosition;
+}
+
+void Swarm::SearchFunctionMinimum()
 {
     CreateParticles();
     FindBestSwarmPositionAndResult();
     RunPsoAlgorithm();
-    return *_bestSwarmPosition;
+    _isFinished = true;
 }
 
 double Swarm::GetBestSwarmResult()
 {
     return _bestSwarmResult;
+}
+
+int Swarm::GetProgressPercentageValue()
+{
+    return 100 * _iterationCounter / _config->iterationCount;
+}
+
+int Swarm::GetProcessedIterationsCount()
+{
+    return _iterationCounter;
+}
+
+bool Swarm::IsFinished()
+{
+    return _isFinished;
 }
 
 void Swarm::CreateParticles()
@@ -62,6 +89,7 @@ Particle Swarm::GetNewParticle()
 void Swarm::RunPsoAlgorithm()
 {
     for (int i=0; i<_config->iterationCount; i++) {
+        _iterationCounter = i+1;
         for (auto particle : _particles) {
             particle.Move();
             auto bestParticleResult = particle.GetBestResult();

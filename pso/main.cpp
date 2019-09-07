@@ -88,7 +88,7 @@ void testPso(ILog &logger,
 
     ObjectiveFunction objectiveFunction(logger, function, parametersCount);
     Swarm swarm(logger, swarmConfig, objectiveFunction);
-    auto result = swarm.GetFunctionMinimum();
+    auto result = swarm.SearchFunctionMinimum();
 
     //write down the results
     cout << description << endl;
