@@ -26,6 +26,7 @@ public:
     double GetBestSwarmResult();
     int GetPercentageProgress();
     int GetIterationProgress();
+    int GetIterationCount();
     bool IsFinished();
 
 private:

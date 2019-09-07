@@ -3,6 +3,7 @@
 #include <string>
 #include <cmath>
 #include <future>
+#include <thread>
 
 #include "ilog.h"
 #include "consolelogger.h"
@@ -81,43 +82,59 @@ double mcCornickFunction(std::vector<double>& input)
     return sin(x+y) + pow(x-y,2) - 1.5*x + 2.5*y + 1;
 }
 
-void testPso(ILog &logger,
+void WriteDownTheResults(std::vector<double>& bestPosition,
+                         double bestResult,
+                         string description) {
+    cout << description << endl;
+    cout << "Obtained result:" << endl;
+    cout << "f( ";
+    for(auto pos : bestPosition) {
+        cout << to_string(pos) << ", ";
+    }
+    cout << ") = " << to_string(bestResult) << endl;
+    cout << "-----------------x-----------------" << endl;
+}
+
+void WriteProgress(
+        int iterationProgress,
+        int allIterationCount,
+        int percentageProgress) {
+    cout << "\r"
+         << "Progress: "
+         << percentageProgress << " % "
+         << "of " << allIterationCount << " iterations, "
+         << "current: " << iterationProgress;
+}
+
+void TestPso(ILog &logger,
              double (*function)(std::vector<double>&),
              int parametersCount,
              SwarmConfig swarmConfig,
              string description) {
 
+    //run the algorithm
     ObjectiveFunction objectiveFunction(logger, function, parametersCount);
     Swarm swarm(logger, swarmConfig, objectiveFunction);
-    //swarm.SearchFunctionMinimum();
-
-    //TEST
-    //**********************************
-
-//    auto f = [] (Swarm* swarm) {
-//        swarm->SearchFunctionMinimumSync();
-//    };
-
     swarm.SearchFunctionMinimumAsync();
+
+    //track the progress
     while(!swarm.IsFinished()) {
-        cout << swarm.GetIterationProgress() << endl;
+        auto percentageProgress = swarm.GetPercentageProgress();
+        auto iterationProgress = swarm.GetIterationProgress();
+        auto allIterationCount = swarm.GetIterationCount();
+        WriteProgress(iterationProgress, allIterationCount, percentageProgress);
+        std::this_thread::sleep_for(std::chrono::milliseconds(100));
     }
-
-    //**********************************
-
-
-
-    auto position = swarm.GetBestSwarmPosition();
+    auto percentageProgress = swarm.GetPercentageProgress();
+    auto iterationProgress = swarm.GetIterationProgress();
+    auto allIterationCount = swarm.GetIterationCount();
+    WriteProgress(iterationProgress, allIterationCount, percentageProgress);
+    cout << endl;
 
     //write down the results
-    cout << description << endl;
-    cout << "Obtained result:" << endl;
-    cout << "f( ";
-    for(auto pos : position) {
-        cout << to_string(pos) << ", ";
-    }
-    cout << ") = " << to_string(swarm.GetBestSwarmResult()) << endl;
-    cout << "-----------------x-----------------" << endl;
+    auto bestPosition = swarm.GetBestSwarmPosition();
+    auto bestResult = swarm.GetBestSwarmResult();
+    WriteDownTheResults(bestPosition, bestResult, description);
 }
 
 int main()
@@ -128,40 +145,40 @@ int main()
     SwarmConfig sphereConfig(*logger);
     sphereConfig.particleFactors = new ParticleFactors(0,3,4);
     sphereConfig.particlesCount = 50;
-    sphereConfig.iterationCount = 100000000;
-    testPso(*logger, sphereFunction, 2, sphereConfig, "expected min -> f(0,0) = 1");
+    sphereConfig.iterationCount = 1000;
+    TestPso(*logger, sphereFunction, 2, sphereConfig, "Expected min -> f(0,0) = 1");
 
-//    cout << "BOOTH FUNCTION" << endl;
-//    SwarmConfig boothConfig(*logger);
-//    boothConfig.particleFactors = new ParticleFactors(0,3,4);
-//    boothConfig.particlesCount = 50;
-//    boothConfig.iterationCount = 1000;
-//    testPso(*logger, boothFunction, 2, boothConfig, "expected min -> f(1,3) = 0");
+    cout << "BOOTH FUNCTION" << endl;
+    SwarmConfig boothConfig(*logger);
+    boothConfig.particleFactors = new ParticleFactors(0,3,4);
+    boothConfig.particlesCount = 50;
+    boothConfig.iterationCount = 1000;
+    TestPso(*logger, boothFunction, 2, boothConfig, "Expected min -> f(1,3) = 0");
 
-//    cout << "EASON FUNCTION" << endl;
-//    SwarmConfig easonConfig(*logger);
-//    easonConfig.particleFactors = new ParticleFactors(0,3,4);
-//    easonConfig.particlesCount = 50;
-//    easonConfig.iterationCount = 1000;
-//    testPso(*logger, easonFunction, 2, easonConfig, "expected min -> f(PI,PI) = -1");
+    cout << "EASON FUNCTION" << endl;
+    SwarmConfig easonConfig(*logger);
+    easonConfig.particleFactors = new ParticleFactors(0,3,4);
+    easonConfig.particlesCount = 50;
+    easonConfig.iterationCount = 1000;
+    TestPso(*logger, easonFunction, 2, easonConfig, "Expected min -> f(PI,PI) = -1");
 
-//    cout << "LEVI FUNCTION" << endl;
-//    SwarmConfig leviConfig(*logger);
-//    leviConfig.particleFactors = new ParticleFactors(0,3,4);
-//    leviConfig.particlesCount = 50;
-//    leviConfig.iterationCount = 1000;
-//    testPso(*logger, leviFunction, 2, leviConfig, "expected min -> f(1,1) = 0");
+    cout << "LEVI FUNCTION" << endl;
+    SwarmConfig leviConfig(*logger);
+    leviConfig.particleFactors = new ParticleFactors(0,3,4);
+    leviConfig.particlesCount = 50;
+    leviConfig.iterationCount = 1000;
+    TestPso(*logger, leviFunction, 2, leviConfig, "Expected min -> f(1,1) = 0");
 
-//    cout << "MC CORNICK FUNCTION" << endl;
-//    SwarmConfig mcCornickConfig(*logger);
-//    mcCornickConfig.particleFactors = new ParticleFactors(0,3,4);
-//    mcCornickConfig.particlesCount = 50;
-//    mcCornickConfig.iterationCount = 1000;
-//    std::vector<Domain> domains;
-//    domains.push_back(Domain(-1.5, 4));
-//    domains.push_back(Domain(-3, 4));
-//    mcCornickConfig.variablesStartDomains = &domains;
-//    testPso(*logger, mcCornickFunction, 2, mcCornickConfig, "expected min -> f(-0.54719,-1.54719) = -1.9133");
+    cout << "MC CORNICK FUNCTION" << endl;
+    SwarmConfig mcCornickConfig(*logger);
+    mcCornickConfig.particleFactors = new ParticleFactors(0,3,4);
+    mcCornickConfig.particlesCount = 50;
+    mcCornickConfig.iterationCount = 1000;
+    std::vector<Domain> domains;
+    domains.push_back(Domain(-1.5, 4));
+    domains.push_back(Domain(-3, 4));
+    mcCornickConfig.variablesStartDomains = &domains;
+    TestPso(*logger, mcCornickFunction, 2, mcCornickConfig, "Expected min -> f(-0.54719,-1.54719) = -1.9133");
 
     delete logger;
 }

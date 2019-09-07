@@ -57,6 +57,11 @@ int Swarm::GetIterationProgress()
     return _iterationCounter;
 }
 
+int Swarm::GetIterationCount()
+{
+    return _config->iterationCount;
+}
+
 bool Swarm::IsFinished()
 {
     return _isFinished;
