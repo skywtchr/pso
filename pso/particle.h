@@ -8,17 +8,20 @@
 #include <iomanip>
 #include <map>
 #include <random>
+#include <cmath>
 
 #include "ilog.h"
 #include "objectivefunction.h"
 #include "particlefactors.h"
 #include "irandomnumbersgenerator.h"
+#include "velocitylimit.h"
 
 class Particle {
 
 public:
     Particle(ILog &logger,
         ParticleFactors &factors,
+        VelocityLimit *velocityLimit,
         ObjectiveFunction &objectiveFunction,
         IRandomNumbersGenerator &randomNumbersGenerator,
         std::vector<double>* startPosition,
@@ -35,6 +38,7 @@ public:
 private:
     ILog *_logger;
     ParticleFactors *_factors;
+    VelocityLimit *_velocityLimit;
     ObjectiveFunction *_objectiveFunction;
     IRandomNumbersGenerator *_randomNumbersGenerator;
 
@@ -47,6 +51,8 @@ private:
 
     void ValidateInitialValues();
     void UpdateVelocity();
+    void FixVelocityToBeWithinLimit();
+    double GetVelocityLenght();
     void UpdatePosition();
     void UpdateResultAndBestValues();
 };

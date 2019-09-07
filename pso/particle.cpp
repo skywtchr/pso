@@ -1,7 +1,7 @@
 #include "particle.h"
 
 Particle::Particle(ILog &logger,
-                   ParticleFactors &factors,
+                   ParticleFactors &factors, VelocityLimit *velocityLimit,
                    ObjectiveFunction &objectiveFunction,
                    IRandomNumbersGenerator &randomNumbersGenerator,
                    std::vector<double>* startPosition,
@@ -11,6 +11,7 @@ Particle::Particle(ILog &logger,
     //configs
     _logger = &logger;
     _factors = &factors;
+    _velocityLimit = velocityLimit;
     _objectiveFunction = &objectiveFunction;
     _randomNumbersGenerator = &randomNumbersGenerator;
     //position
@@ -68,6 +69,42 @@ void Particle::UpdateVelocity()
 
         (*_velocity)[i] = selfVelocityPart + selfExpiriencePart + groupExpiriencePart;
     }
+    FixVelocityToBeWithinLimit();
+}
+
+void Particle::FixVelocityToBeWithinLimit()
+{
+    if (_velocityLimit == nullptr) {
+        return;
+    }
+    if (_velocityLimit->GetMode() == VelocityLimitMode::StandardLimit) {
+        for (size_t i=0; i<_velocity->size(); i++) {
+            if (_velocity->at(i) > _velocityLimit->GetMaxValue()) {
+                _velocity->at(i) = _velocityLimit->GetMaxValue();
+            }
+        }
+        return;
+    }
+    auto velocityLenght = GetVelocityLenght();
+    if (_velocityLimit->GetMode() == VelocityLimitMode::LenghtLimit) {
+        for (size_t i=0; i<_velocity->size(); i++) {
+            auto current = _velocity->at(i);
+            auto max = _velocityLimit->GetMaxValue();
+            if (current > max) {
+                _velocity->at(i) = max * current / velocityLenght;
+            }
+        }
+        return;
+    }
+}
+
+double Particle::GetVelocityLenght()
+{
+    double result = 0;
+    for (auto v : *_velocity) {
+        result += pow(v, 2);
+    }
+    return pow(result, 0.5);
 }
 
 void Particle::UpdatePosition()

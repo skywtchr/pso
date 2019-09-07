@@ -3,13 +3,28 @@
 SwarmConfig::SwarmConfig(ILog &logger)
 {
     _logger = &logger;
-    SetDefaultValues();
+    particlesCount = 30;
+    iterationCount = 500;
+
+    randomNumbersGenerator = new Ranlux24NumbersGenerator();
+    _randomNumbersGeneratorToDelete = randomNumbersGenerator;
+
+    particleFactors = new ParticleFactors(0, 0, 5);
+    _particleFactorsToDelete = particleFactors;
+
+    variablesStartDomains = nullptr;
+    _variablesStartDomainsToDelete = nullptr;
+
+    velocityLimit = nullptr;
+    _velocityLimitToDelete = nullptr;
 }
 
 SwarmConfig::~SwarmConfig()
 {
-    delete randomNumbersGenerator;
-    delete particleFactors;
+    delete _randomNumbersGeneratorToDelete;
+    delete _particleFactorsToDelete;
+    delete _variablesStartDomainsToDelete;
+    delete _velocityLimitToDelete;
 }
 
 Domain SwarmConfig::GetVariableStartDomain(int variableNumber)
@@ -26,13 +41,4 @@ Domain SwarmConfig::GetVariableStartDomain(int variableNumber)
     }
 
     return (*variablesStartDomains)[static_cast<size_t>(variableNumber)];
-}
-
-void SwarmConfig::SetDefaultValues()
-{
-    particlesCount = 30;
-    iterationCount = 500;
-    randomNumbersGenerator = new Ranlux24NumbersGenerator();
-    particleFactors = new ParticleFactors(0, 0, 5);
-    variablesStartDomains = nullptr;
 }

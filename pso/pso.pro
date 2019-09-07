@@ -12,7 +12,8 @@ SOURCES += \
         particlefactors.cpp \
         ranlux24numbersgenerator.cpp \
         swarm.cpp \
-        swarmconfig.cpp
+        swarmconfig.cpp \
+        velocitylimit.cpp
 
 HEADERS += \
     consolelogger.h \
@@ -24,4 +25,5 @@ HEADERS += \
     particlefactors.h \
     ranlux24numbersgenerator.h \
     swarm.h \
-    swarmconfig.h
+    swarmconfig.h \
+    velocitylimit.h

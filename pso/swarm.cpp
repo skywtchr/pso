@@ -109,6 +109,7 @@ Particle Swarm::GetNewParticle()
 {
     return Particle(*_logger,
                     *_config->particleFactors,
+                    _config->velocityLimit,
                     *_objectiveFunction,
                     *_config->randomNumbersGenerator,
                     FixStartPosition(),
