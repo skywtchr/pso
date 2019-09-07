@@ -1,17 +1,17 @@
 #include "particlefactors.h"
 
-ParticleFactors::ParticleFactors(double selfTrust,
+ParticleFactors::ParticleFactors(double inertion,
                                  double selfExpirienceTrust,
                                  double groupExpirienceTrust)
 {
-    _selfTrust = selfTrust;
+    _inertion = inertion;
     _selfExpirienceTrust = selfExpirienceTrust;
     _groupExpirienceTrust = groupExpirienceTrust;
 }
 
 double ParticleFactors::GetSelfTrust() const
 {
-    return _selfTrust;
+    return _inertion;
 }
 
 double ParticleFactors::GetSelfExpirienceTrust() const

@@ -5,7 +5,7 @@
 class ParticleFactors
 {
 public:
-    ParticleFactors(double selfTrust,
+    ParticleFactors(double inertion,
                     double selfExpirienceTrust,
                     double groupExpirienceTrust);
 
@@ -14,7 +14,7 @@ public:
     double GetGroupExpirienceTrust() const;
 
 private:
-    double _selfTrust;
+    double _inertion;
     double _selfExpirienceTrust;
     double _groupExpirienceTrust;
 };
