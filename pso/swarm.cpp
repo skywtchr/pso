@@ -74,6 +74,11 @@ int Swarm::GetIterationCount()
     return _config->iterationCount;
 }
 
+std::vector<Particle> *Swarm::GetParticles()
+{
+    return &_particles;
+}
+
 bool Swarm::IsFinished()
 {
     return _isFinished;

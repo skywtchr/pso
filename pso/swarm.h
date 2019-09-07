@@ -29,6 +29,7 @@ public:
     int GetPercentageProgress();
     int GetIterationProgress();
     int GetIterationCount();
+    std::vector<Particle>* GetParticles();
     bool IsFinished();
 
 private:
