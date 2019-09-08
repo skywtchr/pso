@@ -30,6 +30,7 @@ Swarm::~Swarm() {
 
 void Swarm::SearchFunctionMinimumAsync()
 {
+    _isFinished = false;
     auto asynOperation = [] (Swarm* s) {
         s->SearchFunctionMinimum();
     };
@@ -38,6 +39,7 @@ void Swarm::SearchFunctionMinimumAsync()
 
 void Swarm::SearchFunctionMinimumSync()
 {
+    _isFinished = false;
     SearchFunctionMinimum();
 }
 
